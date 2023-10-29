@@ -43,7 +43,7 @@ const reverseString = (string: string): string => {
 const isReverseableRecursive = (string: string): boolean => {
   if (string.length === 0 || string.length === 1) return true;
 
-  if (string[0] === string[string.length - 1]) {
+  if (string[0].toLowerCase() === string[string.length - 1].toLowerCase()) {
     isReverseableRecursive(string.slice(1, string.length - 1));
     return true;
   }
@@ -52,16 +52,88 @@ const isReverseableRecursive = (string: string): boolean => {
 };
 
 // console.log(isReverseableRecursive("Hello"));
-// console.log(isReverseableRecursive("kayak"));
+// console.log(isReverseableRecursive("kayAk"));
 
 // isReverseableTwoPoint
 const isReverseableTwoPointer = (string: string): boolean => {
   for (let i = 0; i < Math.floor(string.length / 2); i++) {
-    if (string[i] !== string[string.length - (i + 1)]) return false;
+    if (
+      string[i].toLowerCase() !== string[string.length - (i + 1)].toLowerCase()
+    )
+      return false;
   }
 
   return true;
 };
 
 // console.log(isReverseableTwoPointer("Hello"));
-// console.log(isReverseableTwoPointer("kayak"));
+// console.log(isReverseableTwoPointer("kayAk"));
+
+const graph = {                   
+  a: ["b", "c"],
+  b: ["d"],
+  c: ["e"],
+  d: ["f", "h"],
+  e: [],
+  f: [],
+  h: ["z"],
+  z: []
+};
+
+/*
+             a
+            / \
+          b    c
+         /      \
+        d        e
+      /   \
+     f      h
+             \
+              z
+*/
+
+const DFS = (graph: Record<string, string[]>, node: string) => {
+  const stack = [node];
+
+  while (!!stack.length) {
+    const current = stack.pop();
+    console.log(current)
+    if (!!current) {
+
+      for (const item of graph[current]) {
+        stack.push(item);
+      }
+    }
+  }
+};
+
+// DFS(graph, "a");
+
+const BFS = (graph: Record<string, string[]>, node: string) => {
+  const queue = [node];
+
+  while (!!queue.length) {
+    const current = queue.shift();
+    console.log(current)
+    if (!!current) {
+
+      for (const item of graph[current]) {
+        queue.push(item);
+      }
+    }
+  }
+};
+
+// BFS(graph, "a");
+
+
+const DFSRecursive = (graph: Record<string, string[]>, node: string) => {
+  console.log(node)
+
+  for (const item of graph[node]) {
+    DFSRecursive(graph, item)
+  }
+}
+
+
+// DFSRecursive(graph, "a");
