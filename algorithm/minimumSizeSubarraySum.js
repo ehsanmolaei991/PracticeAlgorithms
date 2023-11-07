@@ -3,17 +3,19 @@ const minimumSizeSubarraySum = (target, nums) => {
   let minLength = Infinity
   let sum = 0
   for (const item of nums) {
+    console.log("item: ", item)
     sum += item
     subArray.push(item)
-    // console.log(subArray)
     while (sum >= target) {
-      console.log(subArray)
       minLength = Math.min(subArray.length, minLength)
-      subArray = subArray.slice(1)
       sum -= subArray[0]
+      subArray = subArray.slice(1)
     }
   }
-  return minLength
+  return minLength === Infinity ? 0 : minLength
 }
 
-console.log(minimumSizeSubarraySum(7, [2, 1, 3, 1, 2, 2, 3]))
+console.log(minimumSizeSubarraySum(7, [1, 2, 3, 4]))
+console.log(minimumSizeSubarraySum(7, [3, 4, 2, 1]))
+console.log(minimumSizeSubarraySum(15, [1, 2, 3, 4, 5]))
+console.log(minimumSizeSubarraySum(4, [1, 4, 6]))
